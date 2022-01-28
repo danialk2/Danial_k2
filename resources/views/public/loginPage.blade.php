@@ -10,6 +10,10 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="../node_modules/bootstrap-social/bootstrap-social.css">
@@ -66,17 +70,21 @@
                     Forgot Password?
                   </a>
 
-                  <a href="dashboard">login admin</a>
-                  <a href="indexUsers">login user</a>
+                  {{-- <a href="dashboard">login admin</a>
+                  <a href="indexUsers">login user</a> --}}
                   <button type="submit" class="btn btn-danger btn-lg  ">
                     Login
                   </button>
                 </div>
               </form>
 
+              {{-- Login with Google --}}
               <div class="ssoLogin center text-center mt-5">
-                <h6>- Login With -</h6>
-                <button type="submit" class="ssoGoogle btn btn-dark mt-3 " style="width: 50px; height:50px; background-color:rgb(43, 43, 43)"> <i class="fab fa-google"></i></button>
+                <a href="{{ route('google.login') }}">
+                  <h6>- Login With -</h6>
+                  <button type="submit" class="ssoGoogle btn btn-dark mt-3 "
+                    style="width: 50px; height:50px; background-color:rgb(43, 43, 43)"> <i class="fab fa-google"></i></button>
+                </a>
               </div>
 
               <div class="text-center mt-5 text-small">
@@ -100,13 +108,34 @@
 
     <!-- General JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+      integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
     <script src="{{ asset('asset/js/stisla.js') }}"></script>
     
     <!-- Template JS File -->
     <script src="{{ asset('asset/js/scripts.js') }}"></script>
+
+    {{-- Toastr Js --}}
+    <script src="{{ asset('asset/js/toastr.js') }}"></script>
+
+    @if (Session::get('success'))
+    <script>
+      toastr.success("{!! Session::get('success') !!}");
+    </script>
+    @elseif (Session::get('error'))
+    <script>
+      toastr.error("{!! Session::get('error') !!}");
+    </script>
+    @endif
   </body>
 </html>

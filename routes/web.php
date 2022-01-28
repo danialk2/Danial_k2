@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\GoogleController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('public.indexPublic');
-});
+})->name('home');
 Route::get('index', function () {
     return view('public.indexPublic');
 });
@@ -48,18 +52,34 @@ Route::get('about', function () {
 
 Route::get('login', function () {
     return view('public.loginPage');
-});
+})->name('login');
 
+
+Route::post('login', [LoginController::class, 'login']);
 
 Route::get('register', function () {
     return view('public.register');
 });
+
+Route::post('register', [RegisterController::class, 'store']);
+
+Route::post("/logout", function () {
+    Auth::logout();
+    session()->regenerate();
+    return redirect('/');
+})->middleware('auth');
 
 Route::get('catalogue', function () {
     return view('public.catalogue');
 });
 
 
+// Google auth login
+
+Route::prefix('google')->name('google.')->group(function () {
+    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+});
 
 
 //-------------------
@@ -149,6 +169,3 @@ Route::get('accounts', function () {
 Route::get('addaccounts', function () {
     return view('admin.accounts.addaccounts');
 });
-
-
-
